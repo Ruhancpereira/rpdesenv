@@ -8,7 +8,7 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-gray-50/95 backdrop-blur-xl border-b border-gray-200/50"
+      className="fixed top-0 left-0 right-0 z-50 bg-gray-30/95 backdrop-blur-xl border-b border-gray-200/50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-center h-16 sm:h-20">
@@ -21,7 +21,7 @@ export default function Navbar() {
               <div className="h-8 sm:h-10 flex items-center justify-center">
                 <img src="/logoRP.png" alt="RP Sistemas" className="h-8 sm:h-10 w-auto" />
               </div>
-              <span className="text-lg sm:text-xl font-bold text-black">RP Sistemas</span>
+              <span className="text-lg sm:text-xl font-bold text-white">RP Sistemas</span>
             </motion.div>
           </MagneticButton>
         </div>
