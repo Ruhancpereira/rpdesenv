@@ -2,6 +2,12 @@ import React, { useEffect } from 'react';
 import Navbar from '@/Components/navigation/Navbar';
 import ParticlesBackground from '@/Components/effects/ParticlesBackground';
 import HeroSection from '@/Components/sections/HeroSection';
+import AboutSection from '@/Components/sections/AboutSection';
+import ServicesSection from '@/Components/sections/ServicesSection';
+import PortfolioSection from '@/Components/sections/PortfolioSection';
+import TestimonialsSection from '@/Components/sections/TestimonialsSection';
+import ContactSection from '@/Components/sections/ContactSection';
+import FooterSection from '@/Components/sections/FooterSection';
 
 export default function Home() {
   useEffect(() => {
@@ -23,10 +29,15 @@ export default function Home() {
       
       {/* Main content */}
       <main>
-        {/* Hero */}
         <div id="hero">
           <HeroSection />
         </div>
+        <AboutSection />
+        <ServicesSection />
+        <PortfolioSection />
+        <TestimonialsSection />
+        <ContactSection />
+        <FooterSection />
       </main>
       
       {/* Global gradient overlay */}

@@ -8,10 +8,11 @@ import Card3D from '../effects/Card3D';
 import GlowButton from '../effects/GlowButton';
 import TextReveal from '../effects/TextReveal';
 
+// Atualize com os dados reais da sua organização (obrigatório para Apple Developer)
 const contactInfo = [
-  { icon: Mail, label: 'Email', value: 'contato@empresa.com.br' },
-  { icon: Phone, label: 'Telefone', value: '+55 (11) 99999-9999' },
-  { icon: MapPin, label: 'Endereço', value: 'São Paulo, SP - Brasil' },
+  { icon: Mail, label: 'Email (Suporte)', value: 'contato@rpsistemas.cloud', href: 'mailto:contato@rpsistemas.cloud' },
+  { icon: Phone, label: 'Telefone', value: '+55 (48) 98851-9790', href: 'tel:+55 (48) 98851-9790' },
+  { icon: MapPin, label: 'Endereço', value: 'Criciúma, SC - Brasil', href: null },
 ];
 
 const socialLinks = [
@@ -54,7 +55,7 @@ export default function ContactSection() {
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#CCFF00]/20 rounded-full blur-[150px]" />
       
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Section header */}
+        {/* Section header - Suporte ao cliente (requisito Apple Developer) */}
         <div className="text-center mb-16">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -62,16 +63,16 @@ export default function ContactSection() {
             viewport={{ once: true }}
             className="inline-block text-[#CCFF00] text-sm font-semibold tracking-wider uppercase mb-4"
           >
-            Contato
+            Contato e Suporte
           </motion.span>
           
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
             <TextReveal className="justify-center text-white">
-              Vamos Criar Algo
+              Suporte ao Cliente
             </TextReveal>
             <TextReveal className="justify-center" delay={0.2}>
               <span className="text-[#CCFF00]">
-                Incrível Juntos
+                e Contato
               </span>
             </TextReveal>
           </h2>
@@ -83,8 +84,9 @@ export default function ContactSection() {
             transition={{ delay: 0.3 }}
             className="text-gray-400 text-lg max-w-2xl mx-auto"
           >
-            Tem um projeto em mente? Entre em contato e vamos transformar 
-            sua ideia em realidade digital.
+            Precisa de ajuda, dúvidas sobre nossos apps ou quer falar conosco? 
+            Entre em contato pelo formulário abaixo ou pelos canais listados. 
+            Nossa equipe está à disposição.
           </motion.p>
         </div>
 
@@ -110,9 +112,15 @@ export default function ContactSection() {
                 <div className="w-12 h-12 rounded-xl bg-[#CCFF00] flex items-center justify-center group-hover:scale-110 transition-transform">
                   <info.icon className="w-6 h-6 text-black" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-gray-400 text-sm">{info.label}</p>
-                  <p className="text-white font-medium">{info.value}</p>
+                  {info.href ? (
+                    <a href={info.href} className="text-white font-medium block truncate hover:text-[#CCFF00] transition-colors" rel="noopener noreferrer">
+                      {info.value}
+                    </a>
+                  ) : (
+                    <p className="text-white font-medium">{info.value}</p>
+                  )}
                 </div>
               </motion.div>
             ))}
