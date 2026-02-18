@@ -1,8 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Cog } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import TextReveal from '../effects/TextReveal';
-import Card3D from '../effects/Card3D';
 
 export default function HeroSection() {
   return (
@@ -49,36 +48,6 @@ export default function HeroSection() {
           Desenvolvemos sistemas personalizados, aplicativos e soluções web que 
           impulsionam seu negócio para o futuro. Tecnologia de ponta com design impecável.
         </motion.p>
-
-        {/* Card "Em breve" */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1 }}
-          className="flex justify-center px-4"
-        >
-          <Card3D className="max-w-md w-full">
-            <div className="p-6 sm:p-8 text-center">
-              {/* Engrenagem animada */}
-              <motion.div
-                className="flex justify-center mb-4 sm:mb-6"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-              >
-                <Cog className="w-12 h-12 sm:w-16 sm:h-16 text-[#CCFF00]" />
-              </motion.div>
-              
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">
-                Em Breve
-              </h2>
-              
-              <p className="text-gray-400 text-base sm:text-lg leading-relaxed">
-                Estamos trabalhando em algo incrível. 
-                Em breve você poderá conhecer nossos projetos e serviços.
-              </p>
-            </div>
-          </Card3D>
-        </motion.div>
       </div>
     </section>
   );
