@@ -15,6 +15,25 @@ async function doLogout() {
 export default function AppShell({ user, children }) {
   const router = useRouter();
   const navItems = getVisibleNavItems(user?.role);
+  const principalNav = navItems.filter((item) =>
+    ["dashboardExecutivo", "dashboardOperacional", "dashboardCS"].includes(item.key),
+  );
+  const operacaoNav = navItems.filter((item) =>
+    ["agenda", "projetos", "capacity", "bottlenecks", "riscosClientes"].includes(item.key),
+  );
+  const estruturaNav = navItems.filter((item) =>
+    ["colaboradores", "clientes", "modulos", "skills"].includes(item.key),
+  );
+  const gestaoNav = navItems.filter((item) =>
+    ["health", "nps", "tarefas", "relatorios"].includes(item.key),
+  );
+
+  const groupedNav = [
+    { title: "Dashboards", items: principalNav },
+    { title: "Operação", items: operacaoNav },
+    { title: "Estrutura", items: estruturaNav },
+    { title: "Gestão e CS", items: gestaoNav },
+  ].filter((group) => group.items.length > 0);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -26,24 +45,34 @@ export default function AppShell({ user, children }) {
             <p className="mt-2 text-xs text-slate-400">Operação previsível para o agronegócio</p>
           </div>
 
-          <nav className="space-y-1">
-            {navItems.map((item) => {
-              const active = router.pathname === item.href || router.pathname.startsWith(`${item.href}/`);
-              return (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  className={cn(
-                    "block rounded-lg px-3 py-2 text-sm transition",
-                    active
-                      ? "bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-500/40"
-                      : "text-slate-300 hover:bg-slate-800 hover:text-slate-100",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+          <nav className="space-y-4">
+            {groupedNav.map((group) => (
+              <div key={group.title}>
+                <p className="mb-1 px-2 text-[11px] uppercase tracking-[0.15em] text-slate-500">
+                  {group.title}
+                </p>
+                <div className="space-y-1">
+                  {group.items.map((item) => {
+                    const active =
+                      router.pathname === item.href || router.pathname.startsWith(`${item.href}/`);
+                    return (
+                      <Link
+                        key={item.key}
+                        href={item.href}
+                        className={cn(
+                          "block rounded-lg px-3 py-2 text-sm transition",
+                          active
+                            ? "bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-500/40"
+                            : "text-slate-300 hover:bg-slate-800 hover:text-slate-100",
+                        )}
+                      >
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
         </aside>
 
@@ -52,7 +81,12 @@ export default function AppShell({ user, children }) {
             <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
               <div>
                 <p className="text-xs uppercase tracking-[0.15em] text-slate-500">Plataforma Corporativa</p>
-                <p className="text-sm text-slate-200">{profileLabels[user?.role] || user?.role}</p>
+                <p className="text-sm text-slate-200">
+                  {profileLabels[user?.role] || user?.role}
+                  <span className="ml-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] text-emerald-300">
+                    Operação em tempo real
+                  </span>
+                </p>
               </div>
 
               <div className="flex items-center gap-3">

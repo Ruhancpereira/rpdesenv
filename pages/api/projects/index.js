@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { methodNotAllowed, parseBody } from "@/lib/http";
 import { requireAuth } from "@/lib/auth";
+import { getProjectExecutionViews } from "@/lib/operational-analytics";
 
 const READ_ROLES = ["ADMIN", "COORDENADOR", "GERENTE", "CS", "DIRETORIA", "CONSULTOR"];
 const WRITE_ROLES = ["ADMIN", "COORDENADOR", "GERENTE"];
@@ -21,6 +22,12 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     const user = await requireAuth(req, res, READ_ROLES);
     if (!user) return;
+
+    if (req.query?.view === "execution") {
+      const views = await getProjectExecutionViews();
+      res.status(200).json(views);
+      return;
+    }
 
     const rows = await prisma.project.findMany({
       include: {

@@ -9,16 +9,29 @@ export const getServerSideProps = withPageAuth(
   ["ADMIN", "DIRETORIA", "COORDENADOR", "GERENTE"],
   async ({ context }) => {
     const baseUrl = `${(context.req.headers["x-forwarded-proto"] || "http").split(",")[0]}://${context.req.headers.host}`;
-    const response = await fetch(`${baseUrl}/api/dashboard/executivo`, {
-      headers: { cookie: context.req.headers.cookie || "" },
-    });
-    const data = await response.json();
-    return { props: { data } };
+    const [dashboardResponse, overviewResponse] = await Promise.all([
+      fetch(`${baseUrl}/api/dashboard/executivo`, {
+        headers: { cookie: context.req.headers.cookie || "" },
+      }),
+      fetch(`${baseUrl}/api/operations-overview`, {
+        headers: { cookie: context.req.headers.cookie || "" },
+      }),
+    ]);
+    const [data, overview] = await Promise.all([
+      dashboardResponse.json(),
+      overviewResponse.json(),
+    ]);
+    return { props: { data, overview } };
   },
 );
 
-export default function DashboardExecutivoPage({ user, data }) {
+export default function DashboardExecutivoPage({ user, data, overview }) {
   const metrics = data?.metrics || {};
+  const risks = overview?.clientRisk?.summary || {};
+  const bottlenecks = overview?.bottlenecks?.summary || {};
+  const spofSync = overview?.spofSync || {};
+  const topClients = (overview?.clientRisk?.items || []).slice(0, 6);
+  const topModules = (overview?.bottlenecks?.moduleBottlenecks || []).slice(0, 8);
 
   return (
     <ClientPageWrapper user={user}>
@@ -59,6 +72,49 @@ export default function DashboardExecutivoPage({ user, data }) {
             label="Clientes vermelhos"
             value={metrics.clientesVermelhos ?? 0}
             tone={metrics.clientesVermelhos > 0 ? "danger" : "success"}
+          />
+          <KpiCard
+            label="Módulos com SPOF"
+            value={bottlenecks.modulesWithSpof ?? 0}
+            tone={(bottlenecks.modulesWithSpof || 0) > 0 ? "danger" : "success"}
+          />
+          <KpiCard
+            label="Clientes em risco (painel)"
+            value={risks.red ?? 0}
+            tone={(risks.red || 0) > 0 ? "danger" : "success"}
+          />
+          <KpiCard
+            label="SPOF ativos"
+            value={spofSync.active ?? 0}
+            helper={`+${spofSync.created || 0} novos / ${spofSync.resolved || 0} resolvidos`}
+            tone={(spofSync.active || 0) > 0 ? "warning" : "success"}
+          />
+        </section>
+
+        <section className="grid gap-6 xl:grid-cols-2">
+          <DataTable
+            title="Clientes prioritários por risco"
+            columns={[
+              { key: "client", label: "Cliente" },
+              { key: "healthScore", label: "Health" },
+              { key: "nps", label: "NPS" },
+              { key: "delayedProjects", label: "Atrasos" },
+              { key: "risk", label: "Risco" },
+            ]}
+            data={topClients}
+            emptyMessage="Sem clientes críticos no momento."
+          />
+          <DataTable
+            title="Gargalos de módulos"
+            columns={[
+              { key: "modulo", label: "Módulo" },
+              { key: "core", label: "Core" },
+              { key: "especialistas", label: "N4" },
+              { key: "gap", label: "Gap" },
+              { key: "severidade", label: "Severidade" },
+            ]}
+            data={topModules}
+            emptyMessage="Sem gargalos críticos."
           />
         </section>
 

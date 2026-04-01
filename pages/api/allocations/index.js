@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { methodNotAllowed, parseBody } from "@/lib/http";
 import { requireAuth } from "@/lib/auth";
+import { upsertSpofAlerts } from "@/lib/operational-analytics";
 
 function toDateOnlyString(date) {
   return date.toISOString().slice(0, 10);
@@ -110,6 +111,14 @@ export default async function handler(req, res) {
     return;
   }
 
+  if (req.method === "PATCH") {
+    const user = await requireAuth(req, res, ["ADMIN", "COORDENADOR", "GERENTE"]);
+    if (!user) return;
+    const sync = await upsertSpofAlerts(user.id);
+    res.status(200).json({ message: "Alertas de SPOF sincronizados.", sync });
+    return;
+  }
+
   if (req.method === "POST") {
     const user = await requireAuth(req, res, ["ADMIN", "COORDENADOR", "GERENTE"]);
     if (!user) return;
@@ -150,5 +159,5 @@ export default async function handler(req, res) {
     return;
   }
 
-  methodNotAllowed(res, ["GET", "POST"]);
+  methodNotAllowed(res, ["GET", "POST", "PATCH"]);
 }
