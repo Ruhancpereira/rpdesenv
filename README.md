@@ -1,139 +1,109 @@
-# RP Desenv - Site Portfolio
+# Agrosys Ops - Gestão da Operação de Implantação
 
-Site portfolio profissional desenvolvido com Next.js, React e Tailwind CSS, incluindo animações avançadas e efeitos visuais interativos.
+Sistema web completo para gestão da operação de implantação de software no agronegócio, com foco em previsibilidade operacional, capacidade, experiência do cliente, NPS e Customer Success de implantação.
 
-## 🚀 Tecnologias
+## Stack
 
-- **Next.js 14** - Framework React
-- **React 18** - Biblioteca UI
-- **Tailwind CSS** - Estilização
-- **Framer Motion** - Animações
-- **Lucide React** - Ícones
-- **Sonner** - Notificações Toast
+- Next.js 14 (Pages Router)
+- React 18
+- Tailwind CSS
+- Prisma ORM
+- SQLite (desenvolvimento)
+- Autenticação por sessão via cookie HttpOnly
+- Controle de acesso por perfil (RBAC)
 
-## 📋 Pré-requisitos
+## Módulos entregues
 
-- Node.js 18+ instalado
-- npm ou yarn
+- Login e autenticação
+- Dashboard Executivo
+- Dashboard Operacional
+- Dashboard CS / NPS
+- Cadastro de Colaboradores
+- Cadastro de Clientes
+- Cores e Módulos
+- Projetos de Implantação
+- Agenda e Alocação (com alertas de conflito/sobrecarga/fragmentação)
+- Capacity Planning
+- Health Score
+- NPS com classificação automática e automações
+- Tarefas e Planos de Ação
+- Relatórios com exportação CSV (base para Excel)
 
-## 🛠️ Instalação
+## Perfis de acesso
 
-1. **Clone o repositório** (se aplicável)
+- Administrador
+- Coordenador de Operações
+- Gerente de Implantação
+- Consultor de Implantação
+- Customer Success de Implantação
+- Diretoria
 
-2. **Instale as dependências:**
+## Execução local
+
+Pré-requisitos:
+
+- Node.js 18+
+- npm
+
+Instalação:
+
 ```bash
 npm install
 ```
-ou
+
+Banco e dados de exemplo:
+
 ```bash
-yarn install
+npx prisma migrate dev --name init
+npx prisma generate
+npm run prisma:seed
 ```
 
-## 🧪 Como Testar
-
-### Modo Desenvolvimento
-
-Para rodar o projeto em modo de desenvolvimento:
+Rodar em desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-ou
+Aplicação: `http://localhost:3000`
 
-```bash
-yarn dev
-```
+## Usuários de demonstração
 
-O site estará disponível em: `http://localhost:3000`
+Senha padrão para todos: `agrosys123`
 
-### Build de Produção
+- admin@agrosys.com.br
+- coordenador@agrosys.com.br
+- gerente@agrosys.com.br
+- consultor@agrosys.com.br
+- cs@agrosys.com.br
+- diretoria@agrosys.com.br
 
-Para criar um build de produção:
-
-```bash
-npm run build
-```
-
-Para iniciar o servidor de produção:
-
-```bash
-npm start
-```
-
-### Lint
-
-Para verificar o código:
+## Build e validação
 
 ```bash
 npm run lint
+npm run build
 ```
 
-## 📁 Estrutura do Projeto
+## Estrutura técnica relevante
 
-```
-RPDesenvSite/
-├── Components/          # Componentes React
-│   ├── effects/        # Efeitos visuais (Cursor, Particles, etc)
-│   ├── navigation/     # Navegação (Navbar)
-│   ├── sections/       # Seções da página
-│   └── ui/            # Componentes UI reutilizáveis
-├── Pages/              # Páginas (Home)
-├── Layout.js          # Layout principal
-├── lib/               # Utilitários
-├── pages/             # Páginas Next.js
-├── styles/            # Estilos globais
-└── package.json       # Dependências
-```
+- `prisma/schema.prisma`: modelo de dados completo (colaboradores, clientes, projetos, fases, módulos, alocações, tarefas, NPS, health score, alertas e auditoria)
+- `prisma/seed.js`: massa de dados realista
+- `pages/api/**`: APIs REST dos módulos
+- `pages/**`: telas do sistema
+- `lib/access.js`: mapa de permissões por rota/perfil
+- `lib/auth.js`: autenticação e sessão
+- `lib/page-helpers.js`: proteção de páginas SSR
 
-## ✨ Funcionalidades
+## Preparado para integrações futuras
 
-- ✨ Design moderno e responsivo
-- 🎨 Animações suaves com Framer Motion
-- 🖱️ Cursor customizado interativo
-- ✨ Background de partículas animadas
-- 📱 Totalmente responsivo
-- 🎯 Navegação suave entre seções
-- 📧 Formulário de contato
-- 🎭 Efeitos 3D em cards
-- 🔘 Botões com efeitos magnéticos e glow
+A arquitetura foi estruturada para evoluir com integrações em:
 
-## 🔧 Configuração
-
-O projeto está configurado com:
-
-- **Path Aliases**: `@/` aponta para a raiz do projeto
-- **Tailwind CSS**: Configurado e pronto para uso
-- **PostCSS**: Processamento de CSS
-- **JSConfig**: Configuração de paths e aliases
-
-## 📝 Notas
-
-- O projeto usa a estrutura de Pages Router do Next.js
-- Todos os componentes estão em JSX
-- O Tailwind CSS está configurado para escanear os arquivos corretos
-- O Layout global está definido em `Layout.js`
-
-## 🐛 Solução de Problemas
-
-### Erro de módulo não encontrado
-
-Certifique-se de que todas as dependências foram instaladas:
-```bash
-npm install
-```
-
-### Erro de path alias (@/)
-
-Verifique se o `jsconfig.json` está correto e reinicie o servidor de desenvolvimento.
-
-### Estilos não aparecem
-
-Certifique-se de que o `styles/globals.css` está sendo importado no `_app.js`.
-
-## 📄 Licença
-
-Este projeto é de uso pessoal/portfólio.
+- E-mail
+- WhatsApp
+- Google Calendar
+- Power BI
+- ERP/CRM
 
 
 
