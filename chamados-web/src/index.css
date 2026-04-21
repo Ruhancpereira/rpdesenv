@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  /* Tema azul (fundos escuros + acentos sky/blue) */
+  --color-agro-950: #0a1528;
+  --color-agro-900: #111f3a;
+  --color-agro-800: #172a4d;
+  --color-agro-accent: #38bdf8;
+  --color-agro-warm: #60a5fa;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background: linear-gradient(165deg, var(--color-agro-950) 0%, #0d1a32 45%, #060d1a 100%);
+  color: #e8eef8;
+}
+
+#root {
+  min-height: 100vh;
+}

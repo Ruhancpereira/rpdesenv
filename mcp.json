@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "agrosys": {
+      "command": "node",
+      "args": ["/Users/ruhancimolinpereira/Agrosys/agrosys-mcp/dist/index.js"],
+      "env": {
+        "AGROSYS_API_BASE_URL": "http://localhost:8080",
+        "AGROSYS_USERNAME": "admin",
+        "AGROSYS_PASSWORD": "agrosys123"
+      }
+    }
+  }
+}
