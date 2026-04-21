@@ -1,0 +1,59 @@
+server:
+  port: 8080
+  tomcat:
+    # Evita 413 em uploads grandes (multipart)
+    max-http-form-post-size: 64MB
+    max-swallow-size: 64MB
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 64MB
+      max-request-size: 64MB
+  h2:
+    console:
+      enabled: true
+  datasource:
+    # AUTO_SERVER=TRUE: permite que outro processo/JVM reuse o mesmo arquivo via TCP (evita "Database may be already in use" ao subir 2x o app sem matar o anterior).
+    url: jdbc:h2:file:./data/chamados-db;AUTO_SERVER=TRUE;AUTO_SERVER_PORT=9092;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:agrosys-chamados-dev-secret-change-in-production-min-256-bits-please-use-long-key}
+    expiration-ms: 86400000
+  cors:
+    allowed-origins: http://localhost:5173,http://127.0.0.1:5173
+  admin:
+    username: ${ADMIN_USER:admin}
+    password: ${ADMIN_PASSWORD:agrosys123}
+  chamados:
+    # Lista & filtros: máximo de linhas quando listarTodos=true (análise completa / agente).
+    lista-max-registros-tudo: ${CHAMADOS_LISTA_MAX_TUDO:100000}
+    # Ferramenta chamados_amostra no assistente (JSON); separado para não estourar o contexto do modelo.
+    assistant-chamados-limite: ${CHAMADOS_ASSISTENTE_MAX:20000}
+  assistant:
+    # anthropic = apenas Claude (recomendado). Use auto para tentar Claude → OpenAI → Gemini.
+    provider: ${ASSISTANT_PROVIDER:anthropic}
+    anthropic-api-key: ${ANTHROPIC_API_KEY:}
+    # ID atual na API: ver https://docs.anthropic.com/en/docs/about-claude/models/overview
+    anthropic-model: ${ANTHROPIC_MODEL:claude-sonnet-4-6}
+    # Menos tokens de saída e temperatura mais baixa = respostas mais curtas e menos custo (saída).
+    anthropic-max-output-tokens: ${ANTHROPIC_MAX_OUTPUT_TOKENS:2048}
+    anthropic-temperature: ${ANTHROPIC_TEMPERATURE:0.3}
+    anthropic-max-tool-rounds: ${ANTHROPIC_MAX_TOOL_ROUNDS:8}
+    openai-api-key: ${OPENAI_API_KEY:}
+    model: ${OPENAI_MODEL:gpt-4o-mini}
+    # Google AI Studio / Gemini API — https://aistudio.google.com/apikey
+    gemini-api-key: ${GEMINI_API_KEY:}
+    gemini-model: ${GEMINI_MODEL:gemini-2.0-flash}

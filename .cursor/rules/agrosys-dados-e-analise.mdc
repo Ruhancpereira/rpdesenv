@@ -1,0 +1,45 @@
+---
+description: Acesso a dados Agrosys via API e MCP; análise técnica e segurança
+alwaysApply: true
+---
+
+# Agrosys — dados, API e análise no Cursor
+
+## Autenticação
+
+O `chamados-api` exige **JWT** em `GET/POST /api/**` (exceto `/api/auth/login`). Para o servidor MCP `agrosys-mcp` funcionar, configura no MCP:
+
+- `AGROSYS_JWT` (token já obtido), **ou**
+- `AGROSYS_USERNAME` + `AGROSYS_PASSWORD` (credenciais alinhadas a `app.admin.*` no backend).
+
+Variável da API: `AGROSYS_API_BASE_URL` (ex.: `http://localhost:8080`).
+
+## Assistente na aplicação web
+
+Rota **`/assistente`**: chat no próprio Agrosys. O backend chama **Claude (Anthropic)** ou **OpenAI** (`POST /api/assistant/chat`) com ferramentas sobre a base. Chaves: **`ANTHROPIC_API_KEY`** e/ou **`OPENAI_API_KEY`**. Com `ASSISTANT_PROVIDER=auto` (padrão), prefere Claude se a chave Anthropic existir. Estado: `GET /api/assistant/status` (`disponivel`, `provedor`: anthropic \| openai \| nenhum).
+
+## Ferramentas MCP (stdio)
+
+Pacote: `agrosys-mcp/` — após `npm install && npm run build`, regista o servidor no Cursor (ver `agrosys-mcp/cursor-mcp.example.json`).
+
+- **agrosys_conexao** — testa API + auth.
+- **meta_colunas_filtro**, **meta_opcoes_filtro** — esquema e valores dos chamados.
+- **chamados_listar** — query opcional: filtros como na UI + `page`, `size`, `sort`, `direction`.
+- **chamados_movimentacoes** — por `numeroChamado`.
+- **dashboard_estrategico**, **dashboard_operacional**, **dashboard_tatico** — agregados para análise.
+- **import_historico** — histórico de imports de chamados.
+- **import_rollback_ultimo** — só com `confirmar: true`; **reverte dados**; usar só com confirmação explícita do utilizador.
+- **agenda_*** — meta, opções, gantt, dashboard, **agenda_criar_marcacao** (POST linha única).
+
+Import de **ficheiros** (multipart) não está no MCP; usar a UI ou `curl` com ficheiro.
+
+## Análise técnica dos dados (orientação)
+
+1. Começar por **agrosys_conexao** ou um dashboard leve; cruzar **dashboards** com **chamados_listar** (amostras paginadas) e **agenda_gantt** quando a pergunta envolver agenda.
+2. Explicitar **hipóteses** (período, definição de “disponível”, duplicados na planilha) e **limitações** (dados = último import; H2 em dev).
+3. Para tendências temporais, usar **dashboard_tatico** / campos de data nos filtros dos chamados conforme **meta_colunas_filtro**.
+4. Nunca assumir números sem citar a **fonte** (endpoint ou ferramenta) e a **data de referência** dos dados.
+
+## Código e repositório
+
+Para alterar regras de negócio ou novos endpoints, o código-fonte está em `chamados-api/` e `chamados-web/`. O MCP apenas reflete a API existente.

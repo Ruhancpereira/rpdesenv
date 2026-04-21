@@ -1,0 +1,23 @@
+{
+  "name": "agrosys-mcp",
+  "version": "2.0.0",
+  "description": "MCP stdio: API Agrosys completa (chamados, dashboards, import, agenda). Env: AGROSYS_API_BASE_URL, AGROSYS_JWT ou USERNAME+PASSWORD",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "keywords": ["mcp", "agenda", "agrosys"],
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}

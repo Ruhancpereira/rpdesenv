@@ -37,3 +37,14 @@ next-env.d.ts
 
 
 
+
+/lib/generated/prisma
+/dev.db
+
+# Chamados (Java + H2)
+chamados-api/target/
+chamados-api/data/
+
+# Chamados frontend
+chamados-web/node_modules/
+chamados-web/dist/
