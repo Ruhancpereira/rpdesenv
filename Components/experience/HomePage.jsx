@@ -13,7 +13,16 @@ import SiteFooter from "@/Components/experience/SiteFooter";
 
 export default function Home() {
   return (
-    <ReactLenis root options={{ autoRaf: true, lerp: 0.085, anchors: true, stopInertiaOnNavigate: true }}>
+    <ReactLenis
+      root
+      options={{
+        autoRaf: true,
+        lerp: 0.085,
+        anchors: true,
+        stopInertiaOnNavigate: true,
+        syncTouch: false,
+      }}
+    >
       <Head>
         <title>RP Sistemas | Engenharia de sistemas</title>
         <meta

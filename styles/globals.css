@@ -21,6 +21,11 @@ body {
   overflow-x: clip;
 }
 
+.pin-screen {
+  height: 100vh;
+  height: 100dvh;
+}
+
 ::selection {
   background: rgba(214, 230, 255, 0.28);
   color: #fff;
