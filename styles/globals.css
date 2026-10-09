@@ -2,4 +2,102 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --ink: #041833;
+  --navy: #072a5e;
+  --navy-2: #0c3a78;
+  --ice: #d6e6ff;
+  --line: rgba(214, 230, 255, 0.22);
+  --mx: 50%;
+  --my: 40%;
+}
 
+html {
+  background: var(--navy);
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--navy);
+  color: #f7f9fc;
+  overflow-x: clip;
+}
+
+::selection {
+  background: rgba(214, 230, 255, 0.28);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #041833;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1d4f8f;
+  border-radius: 999px;
+  border: 2px solid #041833;
+}
+
+.noise {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.constellation {
+  background-image:
+    radial-gradient(900px 520px at var(--mx) var(--my), rgba(143, 180, 232, 0.16), transparent 55%),
+    radial-gradient(700px 480px at 80% 10%, rgba(12, 58, 120, 0.55), transparent 50%);
+}
+
+.brand-dissolve {
+  -webkit-mask-image: radial-gradient(circle at 46% 48%, #000 58%, transparent 76%);
+  mask-image: radial-gradient(circle at 46% 48%, #000 58%, transparent 76%);
+}
+
+.sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.45) 48%, transparent 62%);
+  transform: translateX(-120%);
+  animation: sweep 2.8s ease 0.4s 1;
+  mix-blend-mode: screen;
+}
+
+@keyframes sweep {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+.boot-bar {
+  transform-origin: left center;
+  animation: boot 2.3s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes boot {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sweep,
+  .boot-bar {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
