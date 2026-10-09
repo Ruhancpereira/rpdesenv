@@ -68,7 +68,7 @@ export default function SiteNav() {
         </nav>
 
         <a
-          href="#contact"
+          href="https://suporte.rpsistemas.cloud"
           className="rounded-full bg-white px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[#072A5E] transition hover:bg-[#D6E6FF]"
         >
           Suporte
