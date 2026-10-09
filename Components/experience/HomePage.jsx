@@ -5,7 +5,6 @@ import OpeningSequence from "@/Components/experience/OpeningSequence";
 import SiteNav from "@/Components/experience/SiteNav";
 import ScrollRail from "@/Components/experience/ScrollRail";
 import HeroChapter from "@/Components/experience/HeroChapter";
-import CraftChapter from "@/Components/experience/CraftChapter";
 import ServicesChapter from "@/Components/experience/ServicesChapter";
 import MethodChapter from "@/Components/experience/MethodChapter";
 import WorkChapter from "@/Components/experience/WorkChapter";
@@ -16,7 +15,7 @@ export default function Home() {
   return (
     <ReactLenis root options={{ autoRaf: true, lerp: 0.085, anchors: true, stopInertiaOnNavigate: true }}>
       <Head>
-        <title>RP Sistemas — Engenharia de sistemas</title>
+        <title>RP Sistemas | Engenharia de sistemas</title>
         <meta
           name="description"
           content="RP Sistemas projeta e constrói software sob medida: sistemas web, aplicativos e plataformas empresariais. Suporte em contato@rpsistemas.cloud."
@@ -24,14 +23,7 @@ export default function Home() {
         <link rel="icon" href="/brand-mark.png" />
       </Head>
 
-      <div
-        className="constellation relative min-h-screen bg-[#072A5E] text-white"
-        onMouseMove={(event) => {
-          const rect = event.currentTarget.getBoundingClientRect();
-          event.currentTarget.style.setProperty("--mx", `${event.clientX - rect.left}px`);
-          event.currentTarget.style.setProperty("--my", `${event.clientY - rect.top}px`);
-        }}
-      >
+      <div className="rp-cursor relative min-h-screen bg-[#072A5E] text-white">
         <div className="pointer-events-none fixed inset-0 z-0">
           <Constellation />
         </div>
@@ -41,7 +33,6 @@ export default function Home() {
         <ScrollRail />
         <main className="relative z-10">
           <HeroChapter />
-          <CraftChapter />
           <ServicesChapter />
           <MethodChapter />
           <WorkChapter />

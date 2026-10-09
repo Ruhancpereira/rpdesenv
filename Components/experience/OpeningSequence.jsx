@@ -74,7 +74,7 @@ export default function OpeningSequence() {
             <img
               src="/brand-mark.png"
               alt="Marca RP Sistemas"
-              className="brand-dissolve h-auto w-[min(78vw,440px)]"
+              className="h-auto w-[min(78vw,420px)]"
             />
             <div className="sweep" />
           </div>

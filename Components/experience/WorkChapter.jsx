@@ -9,7 +9,7 @@ export default function WorkChapter() {
           Onde a complexidade mora
         </h2>
         <p className="mt-5 max-w-xl text-[#E7EEF8]/75">
-          Linhas de sistema em que a engenharia da RP atua. Cada uma pede modelo, fluxo e operação — não só uma interface.
+          Linhas de sistema em que a engenharia da RP atua. Cada uma pede modelo, fluxo e operação, não só uma interface.
         </p>
 
         <div className="relative mt-14">
@@ -25,13 +25,6 @@ export default function WorkChapter() {
               </div>
               <h3 className="font-display mt-8 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">{work.title}</h3>
               <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#E7EEF8]/80 sm:text-lg">{work.text}</p>
-              <ul className="mt-8 flex flex-wrap gap-2">
-                {work.tags.map((tag) => (
-                  <li key={tag} className="rounded-full border border-white/15 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.14em] text-white/75">
-                    {tag}
-                  </li>
-                ))}
-              </ul>
             </article>
           ))}
         </div>

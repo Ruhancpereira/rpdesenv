@@ -8,20 +8,16 @@ export default function HeroChapter() {
     offset: ["start start", "end end"],
   });
 
-  const contentY = useTransform(scrollYProgress, [0, 0.7], [0, -60]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.55, 0.82], [1, 1, 0]);
-  const markScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.82]);
-  const markY = useTransform(scrollYProgress, [0, 0.8], [0, -40]);
-  const wordScale = useTransform(scrollYProgress, [0.45, 0.95], [0.86, 7]);
-  const wordOpacity = useTransform(scrollYProgress, [0.4, 0.58, 0.86, 1], [0, 1, 0.7, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -36]);
+  const markY = useTransform(scrollYProgress, [0, 1], [0, -28]);
 
   return (
-    <section id="hero" ref={ref} className="relative md:h-[230vh]">
+    <section id="hero" ref={ref} className="relative md:h-[145vh]">
       <div className="relative z-10 mx-auto grid w-full max-w-[1440px] items-center gap-6 px-5 pb-16 pt-24 sm:px-8 md:hidden">
         <img
           src="/brand-mark.png"
           alt="Símbolo RP: letra R escultural e esfera de circuito"
-          className="brand-dissolve mx-auto w-full max-w-[420px]"
+          className="mx-auto w-full max-w-[420px]"
         />
         <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-[#D6E6FF]">
           Engenharia de software · Criciúma
@@ -30,7 +26,7 @@ export default function HeroChapter() {
           O sistema é o produto.
         </h1>
         <p className="text-base leading-relaxed text-[#E7EEF8]/80">
-          Projetamos e construímos software sob medida — web, aplicativos e plataformas empresariais — com domínio, contrato e operação no mesmo desenho.
+          Projetamos e construímos software sob medida: web, aplicativos e plataformas empresariais, com domínio, contrato e operação no mesmo desenho.
         </p>
         <div className="flex flex-wrap gap-3">
           <a href="#contact" className="rounded-full bg-white px-5 py-3 text-sm font-medium text-[#072A5E]">
@@ -43,17 +39,8 @@ export default function HeroChapter() {
       </div>
 
       <div className="sticky top-0 hidden h-screen items-center overflow-hidden md:flex">
-        <motion.div
-          style={{ scale: wordScale, opacity: wordOpacity }}
-          className="pointer-events-none absolute inset-0 hidden items-center justify-center md:flex"
-        >
-          <p className="font-display text-[16vw] font-semibold leading-none tracking-[-0.06em] text-white/[0.07]">
-            SISTEMAS
-          </p>
-        </motion.div>
-
         <div className="relative z-10 mx-auto grid w-full max-w-[1440px] items-center gap-8 px-5 pb-10 pt-24 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:pt-20">
-          <motion.div style={{ y: contentY, opacity: contentOpacity }}>
+          <motion.div style={{ y: contentY }}>
             <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-[#D6E6FF]">
               Engenharia de software · Criciúma
             </p>
@@ -61,8 +48,8 @@ export default function HeroChapter() {
               O sistema é o produto.
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-[#E7EEF8]/80 sm:text-lg">
-              Projetamos e construímos software sob medida — web, aplicativos e plataformas
-              empresariais — com domínio, contrato e operação no mesmo desenho.
+              Projetamos e construímos software sob medida: web, aplicativos e plataformas
+              empresariais, com domínio, contrato e operação no mesmo desenho.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -98,17 +85,17 @@ export default function HeroChapter() {
                 <dd className="mt-1 text-white">Público</dd>
               </div>
             </dl>
+            <p className="mt-8 hidden font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 lg:block">
+              rolar para entrar
+            </p>
           </motion.div>
 
-          <motion.div style={{ scale: markScale, y: markY, opacity: contentOpacity }} className="relative">
+          <motion.div style={{ y: markY }} className="relative">
             <img
               src="/brand-mark.png"
               alt="Símbolo RP: letra R escultural e esfera de circuito"
-              className="brand-dissolve mx-auto w-full max-w-[560px]"
+              className="mx-auto w-full max-w-[520px]"
             />
-            <p className="pointer-events-none absolute bottom-6 right-6 hidden font-mono text-[10px] uppercase tracking-[0.28em] text-white/50 lg:block">
-              rolar para entrar
-            </p>
           </motion.div>
         </div>
       </div>

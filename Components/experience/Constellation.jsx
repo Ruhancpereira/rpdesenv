@@ -1,39 +1,117 @@
+import { useEffect, useRef } from "react";
+
 export default function Constellation() {
-  return (
-    <svg
-      className="absolute inset-0 h-full w-full opacity-40"
-      viewBox="0 0 1440 900"
-      fill="none"
-      aria-hidden="true"
-    >
-      <g stroke="#9ec0ee" strokeOpacity="0.35" strokeWidth="1">
-        <path d="M80 140 L210 90 L320 180 L250 280 L120 240 Z" />
-        <path d="M1100 80 L1240 150 L1320 90 L1380 210 L1200 250 L1120 180 Z" />
-        <path d="M90 700 L220 640 L300 760 L160 820 Z" />
-        <path d="M1180 680 L1320 620 L1400 740 L1260 800 Z" />
-        <path d="M210 90 L1100 80" strokeDasharray="2 10" strokeOpacity="0.2" />
-        <path d="M300 760 L1180 680" strokeDasharray="2 12" strokeOpacity="0.16" />
-      </g>
-      {[
-        [80, 140],
-        [210, 90],
-        [320, 180],
-        [250, 280],
-        [120, 240],
-        [1100, 80],
-        [1240, 150],
-        [1320, 90],
-        [1380, 210],
-        [1200, 250],
-        [90, 700],
-        [220, 640],
-        [300, 760],
-        [1180, 680],
-        [1320, 620],
-        [1400, 740],
-      ].map(([x, y]) => (
-        <circle key={`${x}-${y}`} cx={x} cy={y} r="2.2" fill="#e7f0ff" fillOpacity="0.8" />
-      ))}
-    </svg>
-  );
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return undefined;
+    const context = canvas.getContext("2d");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const pointer = { x: -9999, y: -9999, active: false };
+    let points = [];
+    let frame = 0;
+
+    const layout = () => {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      canvas.width = Math.floor(width * ratio);
+      canvas.height = Math.floor(height * ratio);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      const gap = width < 760 ? 112 : 148;
+      const next = [];
+      const cols = Math.ceil(width / gap) + 2;
+      const rows = Math.ceil(height / gap) + 2;
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
+          const shift = (row % 2) * gap * 0.5;
+          const jitterX = ((col * 17 + row * 13) % 42) - 21;
+          const jitterY = ((col * 11 + row * 29) % 42) - 21;
+          next.push({
+            x: col * gap + shift + jitterX - gap,
+            y: row * gap + jitterY - gap * 0.35,
+            phase: col * 0.65 + row * 1.15,
+          });
+        }
+      }
+      points = next;
+    };
+
+    const onMove = (event) => {
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+      pointer.active = true;
+    };
+
+    const draw = (time) => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      context.clearRect(0, 0, width, height);
+      const placed = points.map((point) => {
+        let x = point.x;
+        let y = point.y;
+        if (!reduceMotion) {
+          const drift = finePointer ? 5 : 16;
+          x += Math.sin(time * 0.00035 + point.phase) * drift;
+          y += Math.cos(time * 0.00028 + point.phase) * drift;
+        }
+        if (finePointer && pointer.active && !reduceMotion) {
+          const dx = x - pointer.x;
+          const dy = y - pointer.y;
+          const distance = Math.hypot(dx, dy) || 1;
+          const reach = 250;
+          if (distance < reach) {
+            const force = (1 - distance / reach) * 28;
+            x += (dx / distance) * force;
+            y += (dy / distance) * force;
+          }
+        }
+        return { x, y };
+      });
+
+      const linkDistance = width < 760 ? 150 : 178;
+      for (let i = 0; i < placed.length; i += 1) {
+        for (let j = i + 1; j < placed.length; j += 1) {
+          const from = placed[i];
+          const to = placed[j];
+          const distance = Math.hypot(from.x - to.x, from.y - to.y);
+          if (distance < linkDistance) {
+            context.strokeStyle = `rgba(186, 210, 242, ${(1 - distance / linkDistance) * 0.42})`;
+            context.lineWidth = 1;
+            context.beginPath();
+            context.moveTo(from.x, from.y);
+            context.lineTo(to.x, to.y);
+            context.stroke();
+          }
+        }
+      }
+
+      context.fillStyle = "rgba(236, 244, 255, 0.9)";
+      placed.forEach((point) => {
+        context.beginPath();
+        context.arc(point.x, point.y, 1.7, 0, Math.PI * 2);
+        context.fill();
+      });
+
+      frame = requestAnimationFrame(draw);
+    };
+
+    layout();
+    window.addEventListener("resize", layout);
+    window.addEventListener("pointermove", onMove);
+    frame = requestAnimationFrame(draw);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", layout);
+      window.removeEventListener("pointermove", onMove);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="h-full w-full" aria-hidden="true" />;
 }

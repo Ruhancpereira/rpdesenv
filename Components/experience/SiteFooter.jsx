@@ -4,7 +4,7 @@ export default function SiteFooter() {
       <div className="mx-auto flex max-w-[1440px] flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <img src="/brand-mark.png" alt="" className="h-12 w-12 rounded-xl object-cover ring-1 ring-white/10" />
+            <img src="/brand-mark.png" alt="" className="h-14 w-auto" />
             <p className="font-display text-xl font-semibold tracking-[-0.03em]">RP Sistemas</p>
           </div>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#E7EEF8]/70">

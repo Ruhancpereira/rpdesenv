@@ -46,7 +46,7 @@ export default function SiteNav() {
           <img
             src="/brand-mark.png"
             alt="RP Sistemas"
-            className="h-10 w-10 rounded-xl object-cover ring-1 ring-white/15 sm:h-11 sm:w-11"
+            className="h-10 w-auto sm:h-12"
           />
           <span className="font-display text-sm font-semibold tracking-[0.18em] text-white sm:text-base">
             RP

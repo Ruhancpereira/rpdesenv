@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
-import { method, stats } from "@/lib/site-content";
+import { method } from "@/lib/site-content";
 
 export default function MethodChapter() {
   const ref = useRef(null);
@@ -65,14 +65,6 @@ export default function MethodChapter() {
         </div>
       </div>
 
-      <div className="mx-5 mb-8 grid max-w-[1440px] grid-cols-2 gap-px overflow-hidden rounded-[28px] border border-white/10 bg-white/10 sm:mx-8 lg:mx-auto lg:grid-cols-4">
-        {stats.map((stat) => (
-          <div key={stat.label} className="bg-[#072A5E] px-6 py-8">
-            <p className="font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">{stat.value}</p>
-            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[#D6E6FF]/70">{stat.label}</p>
-          </div>
-        ))}
-      </div>
     </section>
   );
 }
